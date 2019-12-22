@@ -69,3 +69,19 @@ for col in ('LotFrontage', 'MasVnrArea', 'GarageYrBlt', 'BsmtFinSF1', 'BsmtFinSF
 ## changing numerical data to categorical:
 train_data['MSSubClass'] = train_data['MSSubClass'].astype(str)
 test_data['MSSubClass'] = test_data['MSSubClass'].astype(str)
+
+def build_model():
+    model = tf.keras.Sequential([
+        tf.keras.layers.Dense(64, activation='relu', input_shape=[len(train_data.keys())]),
+        tf.keras.layers.Dense(64, activation='relu'),
+        tf.keras.layers.Dense(1)
+    ])
+
+    optimizer = tf.keras.optimizers.RMSprop(0.001)
+
+    model.compile(loss='mse', optimizer=optimizer, metrics=['mae', 'mse'])
+    return model
+
+model = build_model()
+model.summary()
+
