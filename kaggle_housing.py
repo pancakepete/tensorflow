@@ -37,7 +37,7 @@ for col in ('MasVnrType', 'Electrical'):
     train_data[col] = train_data[col].fillna('None')
 
 # numerical:
-train_data.select_dtypes(include=['int', 'float']).isnull().sum()[train_data.select_dtypes(include=['int', 'float']).isnull().sum() > 0]
+train_data.select_dtypes(include=['int', 'int32', 'int64', 'float']).isnull().sum()[train_data.select_dtypes(include=['int', 'int32', 'int64', 'float']).isnull().sum() > 0]
 
 for col in ('LotFrontage', 'MasVnrArea', 'GarageYrBlt'):
     train_data[col] = train_data[col].fillna(0);
@@ -52,11 +52,19 @@ for col in ('MSZoning', 'Alley', 'BsmtQual', 'BsmtCond', 'BsmtExposure',
             'PoolQC', 'Fence', 'MiscFeature', 'KitchenQual'):
     test_data[col] = test_data[col].fillna('NA')
 
-for col in ('MasVnrType', 'Electrical', 'Exteror1st', 'Exterior2nd', ):
+for col in ('MasVnrType', 'Electrical', 'Exterior1st', 'Exterior2nd', 'Utilities'):
     test_data[col] = test_data[col].fillna('None')
 
-for col in ('Functional'):
-    test_data[col] = test_data[col].fillna('Typ')
+test_data['Functional'] = test_data['Functional'].fillna('Typ')
+test_data['SaleType'] = test_data['SaleType'].fillna('Oth')
+
+# numerical
+test_data.select_dtypes(include=['int', 'int32', 'int64', 'float']).isnull().sum()[test_data.select_dtypes(include=['int', 'int32', 'int64', 'float']).isnull().sum() > 0]
+
+for col in ('LotFrontage', 'MasVnrArea', 'GarageYrBlt', 'BsmtFinSF1', 'BsmtFinSF2',
+            'BsmtUnfSF', 'TotalBsmtSF', 'BsmtFullBath', 'BsmtHalfBath', 'GarageCars',
+            'GarageArea'):
+    test_data[col] = test_data[col].fillna(0);
 
 ## changing numerical data to categorical:
 train_data['MSSubClass'] = train_data['MSSubClass'].astype(str)
