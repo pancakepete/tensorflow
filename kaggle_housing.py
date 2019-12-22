@@ -85,6 +85,6 @@ def build_model():
 model = build_model()
 model.summary()
 
-example_batch = train_data[:10]
+example_batch = train_data.head()
 example_result = model.predict(example_batch)
 example_result
