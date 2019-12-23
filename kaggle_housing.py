@@ -8,8 +8,8 @@ import seaborn as sns
 import tensorflow as tf
 import os
 
-dataset_path = os.path.abspath("C:/Users/pwitk/Downloads/train.csv")
-test_dataset_path = os.path.abspath("C:/Users/pwitk/Downloads/test.csv")
+dataset_path = os.path.abspath("train.csv")
+test_dataset_path = os.path.abspath("test.csv")
 raw_dataset = pd.read_csv(dataset_path,  sep=",")
 raw_test_dataset = pd.read_csv(test_dataset_path, sep=",")
 
