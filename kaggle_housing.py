@@ -95,7 +95,7 @@ def build_model():
         tf.keras.layers.Dense(1)
     ])
 
-    optimizer = tf.keras.optimizers.RMSprop(0.001)
+    optimizer = tf.keras.optimizers.RMSprop(0.01)
 
     model.compile(loss='mse', optimizer=optimizer, metrics=['mae', 'mse'])
     return model
@@ -107,7 +107,7 @@ example_batch = train_data_np[:10]
 example_result = model.predict(example_batch)
 example_result
 
-model.fit(train_data_np, train_labels, epochs=1000, validation_split=0.2, verbose=1)
+model.fit(train_data_np, train_labels, epochs=2000, validation_split=0.2, verbose=1)
 
 test_predictions = model.predict(train_data_np).flatten()
 a = plt.axes(aspect='equal')
