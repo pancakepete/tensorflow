@@ -70,6 +70,18 @@ for col in ('LotFrontage', 'MasVnrArea', 'GarageYrBlt', 'BsmtFinSF1', 'BsmtFinSF
 train_data['MSSubClass'] = train_data['MSSubClass'].astype(str)
 test_data['MSSubClass'] = test_data['MSSubClass'].astype(str)
 
+## transforming dataframe using one hot encoding
+train_data_str = train_data.select_dtypes(include='object')
+train_data_num = train_data.select_dtypes(include=['int', 'int32', 'int64', 'float'])
+
+for col in train_data_str:
+    train_data_str[col] = pd.Categorical(train_data_str[col])
+    temp_data = pd.get_dummies(train_data_str[col], prefix=col)
+    train_data_num = pd.concat([train_data_num, temp_data], sort=False, axis=1)
+
+train_data = train_data_num
+train_data_np = train_data.to_numpy()
+
 def build_model():
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(64, activation='relu', input_shape=[len(train_data.keys())]),
@@ -85,6 +97,6 @@ def build_model():
 model = build_model()
 model.summary()
 
-example_batch = train_data.head()
+example_batch = train_data_np[:10]
 example_result = model.predict(example_batch)
 example_result
