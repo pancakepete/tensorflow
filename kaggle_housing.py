@@ -72,20 +72,29 @@ test_data['MSSubClass'] = test_data['MSSubClass'].astype(str)
 
 ## pulling out numerical data
 train_data_num = train_data.select_dtypes(include=['int', 'int32', 'int64', 'float'])
+test_data_num = test_data.selcet_dtypes(include=['int', 'int32', 'int64', 'float'])
 
 ## transforming DataFrame using one hot encoding
 train_data_str = train_data.select_dtypes(include='object')
+test_data_str = test_data.select_dtypes(include='object')
 
 for col in train_data_str:
     train_data_str[col] = pd.Categorical(train_data_str[col])
     temp_data = pd.get_dummies(train_data_str[col], prefix=col)
     train_data_num = pd.concat([train_data_num, temp_data], sort=False, axis=1)
 
+for col in test_data_str:
+    test_data_str[col] = pd.Categorical(test_data_str[col])
+    temp_data = pd.get_dummies(test_data_str[col], prefix=col)
+    test_data_num = pd.concat([test_data_num, temp_data], sort=False, axis=1)
+
 ## updating data
 train_data = train_data_num
+test_data = test_data_num
 
 ## moving from DataFrame to numpy array
 train_data_np = train_data.to_numpy()
+test_data_np = test_data.to_numpy()
 train_labels = train_labels.to_numpy()
 
 def build_model():
@@ -107,7 +116,7 @@ example_batch = train_data_np[:10]
 example_result = model.predict(example_batch)
 example_result
 
-model.fit(train_data_np, train_labels, epochs=2000, validation_split=0.2, verbose=1)
+model.fit(train_data_np, train_labels, epochs=1000, validation_split=0.2, verbose=1)
 
 test_predictions = model.predict(train_data_np).flatten()
 a = plt.axes(aspect='equal')
