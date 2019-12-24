@@ -72,7 +72,7 @@ test_data['MSSubClass'] = test_data['MSSubClass'].astype(str)
 
 ## pulling out numerical data
 train_data_num = train_data.select_dtypes(include=['int', 'int32', 'int64', 'float'])
-test_data_num = test_data.selcet_dtypes(include=['int', 'int32', 'int64', 'float'])
+test_data_num = test_data.select_dtypes(include=['int', 'int32', 'int64', 'float'])
 
 ## transforming DataFrame using one hot encoding
 train_data_str = train_data.select_dtypes(include='object')
@@ -126,4 +126,6 @@ plt.ylabel('Predictions')
 _ = plt.plot()
 plt.show()
 
+## ValueError: Error when checking input: expected dense_input to have shape (317,) but got array with shape (304,) !!!!
 result = model.predict(test_data_np)
+pd.DataFrame(result).to_csv("Submission.csv")
