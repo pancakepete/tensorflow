@@ -125,3 +125,5 @@ plt.xlabel('True Values')
 plt.ylabel('Predictions')
 _ = plt.plot()
 plt.show()
+
+result = model.predict(test_data_np)
