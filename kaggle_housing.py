@@ -128,4 +128,8 @@ plt.show()
 
 ## ValueError: Error when checking input: expected dense_input to have shape (317,) but got array with shape (304,) !!!!
 result = model.predict(test_data_np)
-pd.DataFrame(result).to_csv("Submission.csv")
+raw_test_dataset = pd.read_csv(test_dataset_path, sep=",")
+submission = pd.DataFrame()
+submission['Id'] = raw_test_dataset['Id']
+submission['SalePrice'] = result
+pd.DataFrame(submission).to_csv("Submission.csv", index=False)
