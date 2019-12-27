@@ -126,7 +126,6 @@ plt.ylabel('Predictions')
 _ = plt.plot()
 plt.show()
 
-## ValueError: Error when checking input: expected dense_input to have shape (317,) but got array with shape (304,) !!!!
 result = model.predict(test_data_np)
 raw_test_dataset = pd.read_csv(test_dataset_path, sep=",")
 submission = pd.DataFrame()
