@@ -87,7 +87,6 @@ for col in train_data_str:
     temp_data = pd.get_dummies(data_str[col], prefix=col)
     data_num = pd.concat([data_num, temp_data], sort=False, axis=1)
 
-
 ## updating data
 train_data = data_num.head(1460)
 test_data = data_num.tail(1459)
@@ -116,7 +115,7 @@ example_batch = train_data_np[:10]
 example_result = model.predict(example_batch)
 example_result
 
-model.fit(train_data_np, train_labels, epochs=1000, validation_split=0.2, verbose=1)
+model.fit(train_data_np, train_labels, epochs=1000, validation_split=0.1, verbose=1)
 
 test_predictions = model.predict(train_data_np).flatten()
 a = plt.axes(aspect='equal')
@@ -132,5 +131,3 @@ submission = pd.DataFrame()
 submission['Id'] = raw_test_dataset['Id']
 submission['SalePrice'] = result
 pd.DataFrame(submission).to_csv("Submission.csv", index=False)
-
-#test
