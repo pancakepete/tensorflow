@@ -78,19 +78,19 @@ test_data_num = test_data.select_dtypes(include=['int', 'int32', 'int64', 'float
 train_data_str = train_data.select_dtypes(include='object')
 test_data_str = test_data.select_dtypes(include='object')
 
-for col in train_data_str:
-    train_data_str[col] = pd.Categorical(train_data_str[col])
-    temp_data = pd.get_dummies(train_data_str[col], prefix=col)
-    train_data_num = pd.concat([train_data_num, temp_data], sort=False, axis=1)
+## apeending one to another
+data_str = train_data_str.append(test_data_str)
+data_num = train_data_num.append(test_data_num)
 
-for col in test_data_str:
-    test_data_str[col] = pd.Categorical(test_data_str[col])
-    temp_data = pd.get_dummies(test_data_str[col], prefix=col)
-    test_data_num = pd.concat([test_data_num, temp_data], sort=False, axis=1)
+for col in train_data_str:
+    data_str[col] = pd.Categorical(data_str[col])
+    temp_data = pd.get_dummies(data_str[col], prefix=col)
+    data_num = pd.concat([data_num, temp_data], sort=False, axis=1)
+
 
 ## updating data
-train_data = train_data_num
-test_data = test_data_num
+train_data = data_num.head(1460)
+test_data = data_num.tail(1459)
 
 ## moving from DataFrame to numpy array
 train_data_np = train_data.to_numpy()
